@@ -1,3 +1,10 @@
+import { fuel } from ".\\init.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { toUpDecimal } from ".\\rational.js";
+import { less } from ".\\factory.js";
+import { getItem } from ".\\item.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,7 +44,7 @@ Fuel.prototype = {
     }
 }
 
-function getFuel(data, items) {
+export function getFuel(data, items) {
     var fuelCategories = {}
     for (var i = 0; i < data.fuel.length; i++) {
         var fuelName = data.fuel[i]

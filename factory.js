@@ -1,3 +1,33 @@
+import { minimum } from ".\\calculation.js";
+import { settings_DEFAULT_FURNACE_modificationFunc_12 } from ".\\settings.js";
+import { DEFAULT_FURNACE } from ".\\settings.js";
+import { half } from ".\\rational.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { useLegacyCalculations } from ".\\init.js";
+import { init_fuel_modificationFunc_1 } from ".\\init.js";
+import { init_fuel_modificationFunc_0 } from ".\\init.js";
+import { fuel } from ".\\init.js";
+import { modules } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { RationalFromFloats } from ".\\rational.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { reciprocate } from ".\\rational.js";
+import { divmod } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { sub } from ".\\rational.js";
+import { create } from ".\\tooltip.js";
+import { alignPower } from ".\\display.js";
+import { formatName } from ".\\display.js";
+import { add } from ".\\totals.js";
+import { gives } from ".\\recipe.js";
+import { hasProdEffect } from ".\\module.js";
+import { canUse } from ".\\module.js";
+import { index } from ".\\matrix.js";
+import { getFactory } from ".\\events.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -325,7 +355,7 @@ function compareFactories(a, b) {
     return 0
 }
 
-function FactorySpec(factories) {
+export function FactorySpec(factories) {
     this.spec = {}
     this.factories = {}
     for (var i = 0; i < factories.length; i++) {
@@ -344,7 +374,7 @@ function FactorySpec(factories) {
     this.setMinimum("1")
     var smelters = this.factories["smelting"]
     this.furnace = smelters[smelters.length - 1]
-    DEFAULT_FURNACE = this.furnace.name
+    settings_DEFAULT_FURNACE_modificationFunc_12()
     this.miningProd = zero
     this.ignore = {}
 
@@ -353,6 +383,7 @@ function FactorySpec(factories) {
     this.defaultBeacon = null
     this.defaultBeaconCount = zero
 }
+
 FactorySpec.prototype = {
     constructor: FactorySpec,
     // min is a string like "1", "2", or "3".
@@ -497,7 +528,7 @@ function renderTooltipBase() {
     return t
 }
 
-function getFactories(data) {
+export function getFactories(data) {
     var factories = []
     var pumpDef = data["offshore-pump"]["offshore-pump"]
     var pump = new FactoryDef(
@@ -567,7 +598,7 @@ function getFactories(data) {
             var d = data[type][name]
             var fuel = null
             if (d.energy_source && d.energy_source.type === "burner") {
-                fuel = d.energy_source.fuel_category
+                init_fuel_modificationFunc_0()
             }
             factories.push(new FactoryDef(
                 d.name,
@@ -603,7 +634,7 @@ function getFactories(data) {
         }
         var fuel = null
         if (d.energy_source && d.energy_source.type === "burner") {
-            fuel = d.energy_source.fuel_category
+            init_fuel_modificationFunc_1()
         }
         var power
         if (d.mining_power) {

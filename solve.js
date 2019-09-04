@@ -1,3 +1,15 @@
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { MatrixSolver } from ".\\vectorize.js";
+import { solveFor } from ".\\vectorize.js";
+import { match } from ".\\vectorize.js";
+import { findGroups } from ".\\subgraphs.js";
+import { Totals } from ".\\totals.js";
+import { addWaste } from ".\\totals.js";
+import { combine } from ".\\totals.js";
+import { add } from ".\\totals.js";
+import { gives } from ".\\recipe.js";
+import { produce } from ".\\item.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +54,7 @@ function walk(item, seen, solvers) {
     return null
 }
 
-function insertBefore(array, newItem, existingItem) {
+export function insertBefore(array, newItem, existingItem) {
     if (!existingItem) {
         array.push(newItem)
         return
@@ -83,12 +95,13 @@ function topologicalOrder(matrixSolvers) {
     return result
 }
 
-function Solver(items, recipes) {
+export function Solver(items, recipes) {
     this.items = items
     this.recipes = recipes
     this.disabledRecipes = {}
     this.matrixSolvers = []
 }
+
 Solver.prototype = {
     constructor: Solver,
     findSubgraphs: function(spec) {

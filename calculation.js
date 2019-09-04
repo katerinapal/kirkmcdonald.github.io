@@ -1,4 +1,5 @@
 
+import { color } from ".\\visualize.js";
 functionPlot({
     target: "#solution",
     xAxis: {
@@ -34,12 +35,13 @@ functionPlot({
     }]
 })
 
-var minimum = {
+export var minimum = {
     fn: 'x',
     skipTip: true,
     color: "red",
-}
-var options = {
+};
+
+export var options = {
     target: "#vector",
     xAxis: {
         domain: [0, 100],
@@ -51,7 +53,8 @@ var options = {
     },
     disableZoom: true,
     data: [minimum],
-}
+};
+
 var vectors = functionPlot(options)
 function vectormousemove(coords) {
     var x = coords.x

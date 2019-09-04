@@ -1,3 +1,10 @@
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { isZero } from ".\\rational.js";
+import { less } from ".\\factory.js";
+import { equal } from ".\\display.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +21,7 @@ limitations under the License.*/
 "use strict"
 
 // An MxN matrix of rationals.
-function Matrix(rows, cols, mat) {
+export function Matrix(rows, cols, mat) {
     this.rows = rows
     this.cols = cols
     if (mat) {
@@ -26,6 +33,7 @@ function Matrix(rows, cols, mat) {
         }
     }
 }
+
 Matrix.prototype = {
     constructor: Matrix,
     toString: function() {

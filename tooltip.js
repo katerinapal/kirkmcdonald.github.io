@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-function Tooltip(reference, content, target) {
+export function Tooltip(reference, content, target) {
     if (!target) {
         target = reference
     }
@@ -25,6 +25,7 @@ function Tooltip(reference, content, target) {
     this.popper = null
     this.addEventListeners()
 }
+
 Tooltip.prototype = {
     constructor: Tooltip,
     show: function() {

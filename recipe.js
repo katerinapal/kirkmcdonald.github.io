@@ -1,3 +1,22 @@
+import { preferredFuel } from ".\\settings.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { spec } from ".\\init.js";
+import { RationalFromFloats } from ".\\rational.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { create } from ".\\tooltip.js";
+import { recipeRate } from ".\\factory.js";
+import { powerUsage } from ".\\factory.js";
+import { prodEffect } from ".\\factory.js";
+import { less } from ".\\factory.js";
+import { formatName } from ".\\display.js";
+import { getFactory } from ".\\events.js";
+import { getItems } from ".\\item.js";
+import { getItem } from ".\\item.js";
+import { getExtraImage } from ".\\icon.js";
+import { getImage } from ".\\icon.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +32,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-function Ingredient(amount, item) {
+export function Ingredient(amount, item) {
     this.amount = amount
     this.item = item
 }
@@ -193,7 +212,7 @@ function ignoreRecipe(d) {
     return d.subgroup == "empty-barrel"
 }
 
-function getRecipeGraph(data) {
+export function getRecipeGraph(data) {
     var recipes = {}
     var items = getItems(data)
     var water = getItem(data, items, "water")

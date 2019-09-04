@@ -1,3 +1,63 @@
+import { showDebug } from ".\\settings.js";
+import { displayFormat } from ".\\settings.js";
+import { maxPipeThroughput } from ".\\settings.js";
+import { preferredBeltSpeed } from ".\\settings.js";
+import { preferredFuel } from ".\\settings.js";
+import { countPrecision } from ".\\settings.js";
+import { ratePrecision } from ".\\settings.js";
+import { rateName } from ".\\settings.js";
+import { displayRateFactor } from ".\\settings.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { build_targets } from ".\\target.js";
+import { currentTab } from ".\\events.js";
+import { useLegacyCalculations } from ".\\init.js";
+import { fuel } from ".\\init.js";
+import { modules } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { recipeTable } from ".\\init.js";
+import { renderGraph } from ".\\visualize.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { sub } from ".\\rational.js";
+import { equal } from ".\\rational.js";
+import { toMixed } from ".\\rational.js";
+import { toUpDecimal } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { formatSettings } from ".\\fragment.js";
+import { getCount } from ".\\factory.js";
+import { getBeaconInfo } from ".\\factory.js";
+import { moduleCount } from ".\\factory.js";
+import { recipeRate } from ".\\factory.js";
+import { getModule } from ".\\factory.js";
+import { less } from ".\\factory.js";
+import { getWaste } from ".\\totals.js";
+import { get } from ".\\totals.js";
+import { add } from ".\\totals.js";
+import { getRate } from ".\\target.js";
+import { canIgnore } from ".\\recipe.js";
+import { gives } from ".\\recipe.js";
+import { moduleDropdown } from ".\\module.js";
+import { canBeacon } from ".\\module.js";
+import { canUse } from ".\\module.js";
+import { shortName } from ".\\module.js";
+import { index } from ".\\matrix.js";
+import { toString } from ".\\matrix.js";
+import { CopyAllHandler } from ".\\events.js";
+import { BeaconCountHandler } from ".\\events.js";
+import { BeaconHandler } from ".\\events.js";
+import { getFactory } from ".\\events.js";
+import { ModuleCopyHandler } from ".\\events.js";
+import { ModuleHandler } from ".\\events.js";
+import { IgnoreHandler } from ".\\events.js";
+import { pipeLength } from ".\\steps.js";
+import { solve } from ".\\solve.js";
+import { renderDebug } from ".\\debug.js";
+import { sorted } from ".\\sort.js";
+import { getImage } from ".\\icon.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,12 +73,12 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-function formatName(name) {
+export function formatName(name) {
     name = name.replace(new RegExp("-", 'g'), " ")
     return name[0].toUpperCase() + name.slice(1)
 }
 
-function displayRate(x) {
+export function displayRate(x) {
     x = x.mul(displayRateFactor)
     if (displayFormat == "rational") {
         return x.toMixed()
@@ -27,7 +87,7 @@ function displayRate(x) {
     }
 }
 
-function displayCount(x) {
+export function displayCount(x) {
     if (displayFormat == "rational") {
         return x.toMixed()
     } else {
@@ -35,7 +95,7 @@ function displayCount(x) {
     }
 }
 
-function align(s, prec) {
+export function align(s, prec) {
     if (displayFormat == "rational") {
         return s
     }
@@ -54,17 +114,17 @@ function align(s, prec) {
     return s
 }
 
-function alignRate(x) {
+export function alignRate(x) {
     return align(displayRate(x), ratePrecision)
 }
 
-function alignCount(x) {
+export function alignCount(x) {
     return align(displayCount(x), countPrecision)
 }
 
 var powerSuffixes = ["\u00A0W", "kW", "MW", "GW", "TW", "PW"]
 
-function alignPower(x, prec) {
+export function alignPower(x, prec) {
     if (prec === undefined) {
         prec = countPrecision
     }
@@ -77,9 +137,9 @@ function alignPower(x, prec) {
     return align(displayCount(x), prec) + " " + powerSuffixes[i]
 }
 
-var sortOrder = "topo"
+export var sortOrder = "topo";
 
-function pruneSpec(totals) {
+export function pruneSpec(totals) {
     var drop = []
     for (var name in spec.spec) {
         if (!(name in totals.totals)) {
@@ -100,7 +160,7 @@ function pruneSpec(totals) {
     }
 }
 
-var globalTotals
+export var globalTotals;
 
 // The main top-level calculation function. Called whenever the solution
 // requires recalculation.
@@ -108,7 +168,7 @@ var globalTotals
 // This function obtains the set of item-rates to solve for from build_targets,
 // the set of modules from spec, and obtains a solution from solver. The
 // factory counts are then obtained from the solution using the spec.
-function itemUpdate() {
+export function itemUpdate() {
     var rates = {}
     for (var i = 0; i < build_targets.length; i++) {
         var target = build_targets[i]
@@ -119,14 +179,14 @@ function itemUpdate() {
     display()
 }
 
-function Header(name, colSpan) {
+export function Header(name, colSpan) {
     if (!colSpan) {
         colSpan = 1
     }
     return {"name": name, "colSpan": colSpan}
 }
 
-var NO_MODULE = "no module"
+export var NO_MODULE = "no module";
 
 function pipeValues(rate) {
     var pipes = rate.div(maxPipeThroughput).ceil()
@@ -158,7 +218,7 @@ ItemIcon.prototype = {
     }
 }
 
-function BeltIcon(beltItem, beltSpeed) {
+export function BeltIcon(beltItem, beltSpeed) {
     if (!beltItem) {
         beltItem = solver.items[preferredBelt]
     }
@@ -171,6 +231,7 @@ function BeltIcon(beltItem, beltSpeed) {
     this.icon_col = this.item.icon_col
     this.icon_row = this.item.icon_row
 }
+
 BeltIcon.prototype = {
     constructor: BeltIcon,
     renderTooltip: function() {
@@ -820,7 +881,7 @@ RecipeGroup.prototype = {
     },
 }
 
-function RecipeTable(node) {
+export function RecipeTable(node) {
     this.node = node
     var headers = [
         Header("items/" + rateName, 2),
@@ -873,6 +934,7 @@ function RecipeTable(node) {
     this.rowArray = []
     this.rows = {}
 }
+
 RecipeTable.prototype = {
     constructor: RecipeTable,
     setRecipeHeader: function() {
@@ -1032,7 +1094,7 @@ RecipeTable.prototype = {
 var timesDisplayed = zero
 
 // Re-renders the current solution, without re-computing it.
-function display() {
+export function display() {
     // Update the display of the target rate text boxes, if needed.
     for (var i = 0; i < build_targets.length; i++) {
         build_targets[i].getRate()

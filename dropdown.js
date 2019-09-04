@@ -1,3 +1,6 @@
+import { remove } from ".\\display.js";
+import { get } from ".\\totals.js";
+import { add } from ".\\totals.js";
 /*Copyright 2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,7 +41,7 @@ function toggleDropdown() {
 
 // Appends a dropdown to the selection, and returns a selection over the div
 // for the content of the dropdown.
-function makeDropdown(selector, onOpen, onClose) {
+export function makeDropdown(selector, onOpen, onClose) {
     let dropdown = selector.append("div")
         .classed("dropdownWrapper", true)
         .each(function() {
@@ -68,7 +71,7 @@ let labelFor = 0
 //
 // Returns:
 //   Selection with the input's label.
-function addInputs(selector, name, checked, callback) {
+export function addInputs(selector, name, checked, callback) {
     selector.append("input")
         .on("change", function(d, i, nodes) {
             toggleDropdown.call(this)

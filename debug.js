@@ -1,3 +1,9 @@
+import { solver } from ".\\init.js";
+import { toMixed } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { index } from ".\\matrix.js";
+import { insertBefore } from ".\\solve.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -80,7 +86,7 @@ function renderMatrix(matrixSolver, A, rowIcons) {
     return table
 }
 
-function renderDebug() {
+export function renderDebug() {
     var debugTab = document.getElementById("debug_tab")
 
     var oldMatrixes = document.getElementById("matrixes")

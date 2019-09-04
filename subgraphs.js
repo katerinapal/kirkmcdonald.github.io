@@ -1,3 +1,8 @@
+import { itemGroups } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { L } from ".\\circlepath.js";
+import { get } from ".\\totals.js";
+import { fuelIngredient } from ".\\recipe.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -155,7 +160,7 @@ SubgraphMap.prototype = {
     }
 }
 
-function visit(groupmap, group, seen, invert) {
+export function visit(groupmap, group, seen, invert) {
     if (group.id in seen) {
         return []
     }
@@ -252,7 +257,7 @@ function getItemProducts(item, groupmap, prodmap) {
     return prods
 }
 
-function findGroups(spec, items, recipes) {
+export function findGroups(spec, items, recipes) {
     var groups = new SubgraphMap(spec, recipes)
     // 1) Condense all recipes that produce a given item.
     for (var itemName in items) {

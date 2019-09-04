@@ -1,3 +1,43 @@
+import { linkLength } from ".\\settings.js";
+import { maxNodeHeight } from ".\\settings.js";
+import { visDirection } from ".\\settings.js";
+import { visualizer } from ".\\settings.js";
+import { preferredBeltSpeed } from ".\\settings.js";
+import { rateName } from ".\\settings.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { build_targets } from ".\\target.js";
+import { spriteSheetSize } from ".\\init.js";
+import { init_fuel_modificationFunc_2 } from ".\\init.js";
+import { fuel } from ".\\init.js";
+import { belts } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { sheet_hash } from ".\\icon.js";
+import { PX_HEIGHT } from ".\\icon.js";
+import { PX_WIDTH } from ".\\icon.js";
+import { makeCurve } from ".\\circlepath.js";
+import { neighbors } from ".\\subgraphs.js";
+import { div } from ".\\rational.js";
+import { toFloat } from ".\\rational.js";
+import { getCount } from ".\\factory.js";
+import { less } from ".\\factory.js";
+import { displayCount } from ".\\display.js";
+import { displayRate } from ".\\display.js";
+import { formatName } from ".\\display.js";
+import { remove } from ".\\display.js";
+import { renderBoxGraph } from ".\\boxline.js";
+import { get } from ".\\totals.js";
+import { add } from ".\\totals.js";
+import { getRate } from ".\\target.js";
+import { Ingredient } from ".\\recipe.js";
+import { fuelIngredient } from ".\\recipe.js";
+import { gives } from ".\\recipe.js";
+import { GraphClickHandler } from ".\\events.js";
+import { GraphMouseLeaveHandler } from ".\\events.js";
+import { GraphMouseOverHandler } from ".\\events.js";
+import { getFactory } from ".\\events.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +53,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-const colorList = [
+export const colorList = [
     "#1f77b4", // blue
     "#8c564b", // brown
     "#2ca02c", // green
@@ -24,7 +64,7 @@ const colorList = [
     "#7f7f7f", // gray
     "#bcbd22", // yellow
     "#ff7f0e", // orange
-]
+];
 
 function OutputRecipe() {
     this.ingredients = []
@@ -224,7 +264,15 @@ class GraphNode {
     }
 }
 
-function renderNode(selection, margin, justification, ignore, sheetWidth, sheetHeight, recipeColors) {
+export function renderNode(
+    selection,
+    margin,
+    justification,
+    ignore,
+    sheetWidth,
+    sheetHeight,
+    recipeColors
+) {
     selection.each(d => {
         if (justification === "left") {
             d.labelX = d.x0
@@ -287,13 +335,13 @@ function renderNode(selection, margin, justification, ignore, sheetWidth, sheetH
             .attr("height", sheetHeight)
 }
 
-const iconSize = 32
-const nodePadding = 32
+export const iconSize = 32;
+export const nodePadding = 32;
 const colonWidth = 12
 
-var color = d3.scaleOrdinal(colorList)
+export var color = d3.scaleOrdinal(colorList);
 
-function imageViewBox(obj) {
+export function imageViewBox(obj) {
     var x1 = obj.icon_col * PX_WIDTH + 0.5
     var y1 = obj.icon_row * PX_HEIGHT + 0.5
     return `${x1} ${y1} ${PX_WIDTH-1} ${PX_HEIGHT-1}`
@@ -322,7 +370,7 @@ function itemDegree(item, fuelLinks) {
     return itemNeighbors(item, fuelLinks).size
 }
 
-function getColorMaps(nodes, links) {
+export function getColorMaps(nodes, links) {
     let itemColors = new Map()
     let recipeColors = new Map()
     let fuelLinks = new Map()
@@ -455,12 +503,12 @@ function linkTitle(d) {
     }
     let fuel = ""
     if (d.fuel) {
-        fuel = " (fuel)"
+        init_fuel_modificationFunc_2()
     }
     return `${formatName(d.source.name)} \u2192 ${formatName(d.target.name)}${fuel}\n${itemName}${displayRate(d.rate)}/${rateName}`
 }
 
-function renderGraph(totals, ignore) {
+export function renderGraph(totals, ignore) {
     let direction = visDirection
     let [sheetWidth, sheetHeight] = spriteSheetSize
     let data = makeGraph(totals, ignore)

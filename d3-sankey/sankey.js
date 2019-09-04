@@ -1,3 +1,17 @@
+import { nodePadding } from "..\\visualize.js";
+import { settings_linkLength_modificationFunc_8 } from "..\\settings.js";
+import { settings_linkLength_modificationFunc_0 } from "..\\settings.js";
+import { linkLength } from "..\\settings.js";
+import { maxNodeHeight } from "..\\settings.js";
+import { floor } from "..\\rational.js";
+import { align } from "..\\display.js";
+import { get } from "..\\totals.js";
+import { add } from "..\\totals.js";
+import { index } from "..\\matrix.js";
+import { apply } from "..\\color.js";
+import { constant } from ".\\constant.js";
+import { minFAS } from ".\\cycle.js";
+import { justify } from ".\\align.js";
 //import {max, min, sum} from "d3-array";
 import {justify} from "./align.js";
 import constant from "./constant.js";
@@ -15,7 +29,7 @@ function ascendingBreadth(a, b) {
   return a.y0 - b.y0;
 }
 
-function value(d) {
+export function value(d) {
   return d.value;
 }
 
@@ -31,7 +45,7 @@ function defaultLinks(graph) {
   return graph.links;
 }
 
-function find(nodeById, id) {
+export function find(nodeById, id) {
   const node = nodeById.get(id);
   if (!node) throw new Error("missing: " + id);
   return node;
@@ -100,7 +114,7 @@ export default function Sankey() {
   };
 
   sankey.linkLength = function(_) {
-    return arguments.length ? (linkLength = +_, sankey) : linkLength;
+    return arguments.length ? (settings_linkLength_modificationFunc_0(), sankey) : linkLength;
   };
 
   sankey.maxNodeHeight = function(_) {

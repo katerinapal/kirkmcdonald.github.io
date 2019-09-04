@@ -1,3 +1,53 @@
+import { showDebug } from ".\\settings.js";
+import { DEFAULT_DEBUG } from ".\\settings.js";
+import { tooltipsEnabled } from ".\\settings.js";
+import { DEFAULT_TOOLTIP } from ".\\settings.js";
+import { displayFormat } from ".\\settings.js";
+import { DEFAULT_FORMAT } from ".\\settings.js";
+import { linkLength } from ".\\settings.js";
+import { DEFAULT_LINK_LENGTH } from ".\\settings.js";
+import { maxNodeHeight } from ".\\settings.js";
+import { DEFAULT_NODE_BREADTH } from ".\\settings.js";
+import { visDirection } from ".\\settings.js";
+import { DEFAULT_DIRECTION } from ".\\settings.js";
+import { visualizer } from ".\\settings.js";
+import { DEFAULT_VISUALIZER } from ".\\settings.js";
+import { minPipeLength } from ".\\settings.js";
+import { DEFAULT_PIPE } from ".\\settings.js";
+import { preferredBelt } from ".\\settings.js";
+import { DEFAULT_BELT } from ".\\settings.js";
+import { kovarexEnabled } from ".\\settings.js";
+import { DEFAULT_KOVAREX } from ".\\settings.js";
+import { oilGroup } from ".\\settings.js";
+import { DEFAULT_OIL } from ".\\settings.js";
+import { preferredFuel } from ".\\settings.js";
+import { DEFAULT_FUEL } from ".\\settings.js";
+import { DEFAULT_FURNACE } from ".\\settings.js";
+import { minimumAssembler } from ".\\settings.js";
+import { DEFAULT_MINIMUM } from ".\\settings.js";
+import { countPrecision } from ".\\settings.js";
+import { DEFAULT_COUNT_PRECISION } from ".\\settings.js";
+import { ratePrecision } from ".\\settings.js";
+import { DEFAULT_RATE_PRECISION } from ".\\settings.js";
+import { rateName } from ".\\settings.js";
+import { displayRateFactor } from ".\\settings.js";
+import { DEFAULT_RATE } from ".\\settings.js";
+import { colorScheme } from ".\\settings.js";
+import { DEFAULT_COLOR_SCHEME } from ".\\settings.js";
+import { DEFAULT_MODIFICATION } from ".\\settings.js";
+import { globalTotals } from ".\\display.js";
+import { build_targets } from ".\\target.js";
+import { currentTab } from ".\\events.js";
+import { DEFAULT_TAB } from ".\\events.js";
+import { modules } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { currentMod } from ".\\settings.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { equal } from ".\\display.js";
+import { shortName } from ".\\module.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +63,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-function formatSettings(targets) {
+export function formatSettings(targets) {
     var settings = ""
     if (currentTab != DEFAULT_TAB) {
         settings += "tab=" + currentTab.slice(0, currentTab.indexOf("_")) + "&"
@@ -175,7 +225,7 @@ function formatSettings(targets) {
     return settings
 }
 
-function loadSettings(fragment) {
+export function loadSettings(fragment) {
     var settings = {}
     fragment = fragment.substr(1)
     var pairs = fragment.split("&")

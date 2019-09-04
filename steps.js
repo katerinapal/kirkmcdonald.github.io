@@ -1,3 +1,23 @@
+import { rateName } from ".\\settings.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { belts } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { RationalFromFloats } from ".\\rational.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { RationalFromString } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { sub } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { less } from ".\\factory.js";
+import { Header } from ".\\display.js";
+import { alignCount } from ".\\display.js";
+import { alignRate } from ".\\display.js";
+import { equal } from ".\\display.js";
+import { add } from ".\\totals.js";
+import { PipeLengthHandler } from ".\\events.js";
+import { PipeCountHandler } from ".\\events.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +41,7 @@ limitations under the License.*/
 // item-rates.
 
 // For pipe segment of the given length, returns maximum throughput as fluid/s.
-function pipeThroughput(length) {
+export function pipeThroughput(length) {
     if (length.equal(zero)) {
         // A length of zero represents a solid line of pumps.
         return RationalFromFloat(12000)
@@ -39,7 +59,7 @@ var pipeThreshold = RationalFromFloats(4000, 236)
 
 // For fluid throughput in fluid/s, returns maximum length of pipe that can
 // support it.
-function pipeLength(throughput) {
+export function pipeLength(throughput) {
     throughput = throughput.div(RationalFromFloat(60))
     if (RationalFromFloat(200).less(throughput)) {
         return null

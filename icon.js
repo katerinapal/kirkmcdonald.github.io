@@ -1,3 +1,6 @@
+import { tooltipsEnabled } from ".\\settings.js";
+import { Tooltip } from ".\\tooltip.js";
+import { renderTooltip } from ".\\item.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,10 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-var PX_WIDTH = 32
-var PX_HEIGHT = 32
-
-var sheet_hash
+export var PX_WIDTH = 32;
+export var PX_HEIGHT = 32;
+export var sheet_hash;
 
 function Sprite(name, col, row) {
     this.name = name
@@ -24,7 +26,7 @@ function Sprite(name, col, row) {
     this.icon_row = row
 }
 
-function getImage(obj, suppressTooltip, tooltipTarget) {
+export function getImage(obj, suppressTooltip, tooltipTarget) {
     var im = blankImage()
     im.classList.add("icon")
     var x = -obj.icon_col * PX_WIDTH
@@ -55,11 +57,11 @@ function blankImage() {
 
 var sprites
 
-function getExtraImage(name) {
+export function getExtraImage(name) {
     return getImage(sprites[name])
 }
 
-function getSprites(data) {
+export function getSprites(data) {
     sheet_hash = data.sprites.hash
     sprites = {}
     for (var name in data.sprites.extra) {

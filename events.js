@@ -1,3 +1,73 @@
+import { settings_showDebug_modificationFunc_11 } from ".\\settings.js";
+import { showDebug } from ".\\settings.js";
+import { settings_tooltipsEnabled_modificationFunc_10 } from ".\\settings.js";
+import { tooltipsEnabled } from ".\\settings.js";
+import { settings_displayFormat_modificationFunc_9 } from ".\\settings.js";
+import { displayFormat } from ".\\settings.js";
+import { settings_linkLength_modificationFunc_8 } from ".\\settings.js";
+import { linkLength } from ".\\settings.js";
+import { settings_maxNodeHeight_modificationFunc_7 } from ".\\settings.js";
+import { maxNodeHeight } from ".\\settings.js";
+import { settings_visDirection_modificationFunc_6 } from ".\\settings.js";
+import { visDirection } from ".\\settings.js";
+import { settings_visualizer_modificationFunc_5 } from ".\\settings.js";
+import { visualizer } from ".\\settings.js";
+import { settings_countPrecision_modificationFunc_4 } from ".\\settings.js";
+import { countPrecision } from ".\\settings.js";
+import { settings_ratePrecision_modificationFunc_3 } from ".\\settings.js";
+import { ratePrecision } from ".\\settings.js";
+import { settings_rateName_modificationFunc_2 } from ".\\settings.js";
+import { rateName } from ".\\settings.js";
+import { settings_displayRateFactor_modificationFunc_1 } from ".\\settings.js";
+import { displayRateFactor } from ".\\settings.js";
+import { displayRates } from ".\\settings.js";
+import { globalTotals } from ".\\display.js";
+import { display_sortOrder_modificationFunc_0 } from ".\\display.js";
+import { sortOrder } from ".\\display.js";
+import { build_targets } from ".\\target.js";
+import { initDone } from ".\\init.js";
+import { fuel } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { recipeTable } from ".\\init.js";
+import { renderGraph } from ".\\visualize.js";
+import { getMprod } from ".\\settings.js";
+import { setMinPipe } from ".\\settings.js";
+import { setPreferredBelt } from ".\\settings.js";
+import { setKovarex } from ".\\settings.js";
+import { setOilRecipe } from ".\\settings.js";
+import { setPreferredFuel } from ".\\settings.js";
+import { setMinimumAssembler } from ".\\settings.js";
+import { setColorScheme } from ".\\settings.js";
+import { currentMod } from ".\\settings.js";
+import { RationalFromString } from ".\\rational.js";
+import { formatSettings } from ".\\fragment.js";
+import { setDefaultBeacon } from ".\\factory.js";
+import { setDefaultModule } from ".\\factory.js";
+import { moduleCount } from ".\\factory.js";
+import { setFurnace } from ".\\factory.js";
+import { copyModules } from ".\\factory.js";
+import { setModule } from ".\\factory.js";
+import { getModule } from ".\\factory.js";
+import { display } from ".\\display.js";
+import { itemUpdate } from ".\\display.js";
+import { setDisplayedModule } from ".\\display.js";
+import { remove } from ".\\display.js";
+import { updateDisplayedModules } from ".\\display.js";
+import { setIgnore } from ".\\display.js";
+import { add } from ".\\totals.js";
+import { isFactoryTarget } from ".\\target.js";
+import { addTarget } from ".\\target.js";
+import { rateChanged } from ".\\target.js";
+import { factoriesChanged } from ".\\target.js";
+import { displayRecipes } from ".\\target.js";
+import { index } from ".\\matrix.js";
+import { setLength } from ".\\steps.js";
+import { setPipes } from ".\\steps.js";
+import { findSubgraphs } from ".\\solve.js";
+import { loadData } from ".\\init.js";
+import { reset } from ".\\init.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,13 +86,13 @@ limitations under the License.*/
 // build target events
 
 // The "+" button to add a new target.
-function plusHandler() {
+export function plusHandler() {
     addTarget()
     itemUpdate()
 }
 
 // Triggered when the item dropdown box opens.
-function resetSearch(dropdown) {
+export function resetSearch(dropdown) {
     dropdown.getElementsByClassName("search")[0].value = ""
 
     // unhide all child nodes
@@ -33,7 +103,7 @@ function resetSearch(dropdown) {
 }
 
 // Triggered when user is searching target
-function searchTargets() {
+export function searchTargets() {
     let ev = d3.event
     let search = this
     let search_text = search.value.toLowerCase().replace(/[^a-z0-9]+/g, "")
@@ -87,7 +157,7 @@ function searchTargets() {
 }
 
 // Triggered when a build target's item is changed.
-function ItemHandler(target) {
+export function ItemHandler(target) {
     return function(item) {
         target.itemName = item.name
         target.recipeIndex = 0
@@ -97,13 +167,13 @@ function ItemHandler(target) {
 }
 
 // Triggered when a build target's recipe selector is changed.
-function RecipeSelectorHandler(target, i) {
+export function RecipeSelectorHandler(target, i) {
     target.recipeIndex = i
     itemUpdate()
 }
 
 // The "x" button to remove a target.
-function RemoveHandler(target) {
+export function RemoveHandler(target) {
     this.handleEvent = function(event) {
         build_targets.splice(target.index, 1)
         for (var i=target.index; i < build_targets.length; i++) {
@@ -115,7 +185,7 @@ function RemoveHandler(target) {
 }
 
 // Triggered when a "Factories:" text box is changed.
-function FactoryHandler(target) {
+export function FactoryHandler(target) {
     this.handleEvent = function(event) {
         target.factoriesChanged()
         itemUpdate()
@@ -123,7 +193,7 @@ function FactoryHandler(target) {
 }
 
 // Triggered when a "Rate:" text box is changed.
-function RateHandler(target) {
+export function RateHandler(target) {
     this.handleEvent = function(event) {
         target.rateChanged()
         itemUpdate()
@@ -134,102 +204,102 @@ function RateHandler(target) {
 
 // Obtains current data set from UI element, and resets the world with the new
 // data.
-function changeMod() {
+export function changeMod() {
     var modName = currentMod()
 
     reset()
     loadData(modName)
 }
 
-function changeColor(event) {
+export function changeColor(event) {
     setColorScheme(event.target.value)
     display()
 }
 
 // Triggered when the display rate is changed.
-function displayRateHandler(event) {
+export function displayRateHandler(event) {
     var value = event.target.value
-    displayRateFactor = displayRates[value]
-    rateName = value
+    settings_displayRateFactor_modificationFunc_1()
+    settings_rateName_modificationFunc_2()
     display()
 }
 
-function changeRPrec(event) {
-    ratePrecision = Number(event.target.value)
+export function changeRPrec(event) {
+    settings_ratePrecision_modificationFunc_3()
     display()
 }
 
-function changeFPrec(event) {
-    countPrecision = Number(event.target.value)
+export function changeFPrec(event) {
+    settings_countPrecision_modificationFunc_4()
     display()
 }
 
 // Triggered when the "minimum assembling machine" setting is changed.
-function changeMin(min) {
+export function changeMin(min) {
     setMinimumAssembler(min)
     itemUpdate()
 }
 
 // Triggered when the furnace is changed.
-function changeFurnace(furnace) {
+export function changeFurnace(furnace) {
     spec.setFurnace(furnace.name)
     solver.findSubgraphs(spec)
     itemUpdate()
 }
 
 // Triggered when the preferred fuel is changed.
-function changeFuel(fuel) {
+export function changeFuel(fuel) {
     setPreferredFuel(fuel.name)
     solver.findSubgraphs(spec)
     itemUpdate()
 }
 
 // Triggered when the preferred oil recipe is changed.
-function changeOil(oil) {
+export function changeOil(oil) {
     setOilRecipe(oil.priority)
     itemUpdate()
 }
 
 // Triggered when the Kovarex checkbox is toggled.
-function changeKovarex(event) {
+export function changeKovarex(event) {
     setKovarex(event.target.checked)
     itemUpdate()
 }
 
 // Triggered when the preferred belt is changed.
-function changeBelt(belt) {
+export function changeBelt(belt) {
     setPreferredBelt(belt.name)
     display()
 }
 
 // Triggered when the minimum pipe length is changed.
-function changePipeLength(event) {
+export function changePipeLength(event) {
     setMinPipe(event.target.value)
     display()
 }
 
 // Triggered when the mining productivity bonus is changed.
-function changeMprod() {
+export function changeMprod() {
     spec.miningProd = getMprod()
     itemUpdate()
 }
 
 // Triggered when the default module is changed.
-function changeDefaultModule(module) {
+export function changeDefaultModule(module) {
     spec.setDefaultModule(module)
     recipeTable.updateDisplayedModules()
     itemUpdate()
 }
 
 // Triggered when the default beacon module is changed.
-function changeDefaultBeacon(module) {
+export function changeDefaultBeacon(module) {
     spec.setDefaultBeacon(module, spec.defaultBeaconCount)
     recipeTable.updateDisplayedModules()
     itemUpdate()
 }
 
 // Triggered when the default beacon count is changed.
-function changeDefaultBeaconCount(event) {
+export function changeDefaultBeaconCount(event) {
     var count = RationalFromString(event.target.value)
     spec.setDefaultBeacon(spec.defaultBeacon, count)
     recipeTable.updateDisplayedModules()
@@ -237,7 +307,7 @@ function changeDefaultBeaconCount(event) {
 }
 
 // Triggered when the visualizer setting box is toggled.
-function toggleVisualizerSettings() {
+export function toggleVisualizerSettings() {
     let classes = document.getElementById("graph-wrapper").classList
     if (classes.contains("open")) {
         classes.remove("open")
@@ -247,50 +317,50 @@ function toggleVisualizerSettings() {
 }
 
 // Triggered when the visualizer type is changed.
-function changeVisualizerType(event) {
-    visualizer = event.target.value
+export function changeVisualizerType(event) {
+    settings_visualizer_modificationFunc_5()
     display()
 }
 
 // Triggered when the visualizer direction is changed.
-function changeVisualizerDirection(event) {
-    visDirection = event.target.value
+export function changeVisualizerDirection(event) {
+    settings_visDirection_modificationFunc_6()
     display()
 }
 
 // Triggered when the max node breadth is changed.
-function changeNodeBreadth(event) {
-    maxNodeHeight = Number(event.target.value)
+export function changeNodeBreadth(event) {
+    settings_maxNodeHeight_modificationFunc_7()
     display()
 }
 
 // Triggered when the link length is changed.
-function changeLinkLength(event) {
-    linkLength = Number(event.target.value)
+export function changeLinkLength(event) {
+    settings_linkLength_modificationFunc_8()
     display()
 }
 
 // Triggered when the recipe sort order is changed.
-function changeSortOrder(event) {
-    sortOrder = event.target.value
+export function changeSortOrder(event) {
+    display_sortOrder_modificationFunc_0()
     display()
 }
 
 // Triggered when the value format (decimal vs. rational) is changed.
-function changeFormat(event) {
-    displayFormat = event.target.value
+export function changeFormat(event) {
+    settings_displayFormat_modificationFunc_9()
     display()
 }
 
 // Triggered when fancy tooltip box is toggled.
-function changeTooltip(event) {
-    tooltipsEnabled = event.target.checked
+export function changeTooltip(event) {
+    settings_tooltipsEnabled_modificationFunc_10()
     display()
 }
 
 // recipe row events
 
-function IgnoreHandler(row) {
+export function IgnoreHandler(row) {
     this.handleEvent = function(event) {
         if (spec.ignore[row.name]) {
             delete spec.ignore[row.name]
@@ -304,7 +374,7 @@ function IgnoreHandler(row) {
 }
 
 // Triggered when a factory module is changed.
-function ModuleHandler(row, index) {
+export function ModuleHandler(row, index) {
     return function(module) {
         if (spec.setModule(row.recipe, index, module) || isFactoryTarget(row.recipe.name)) {
             itemUpdate()
@@ -315,7 +385,7 @@ function ModuleHandler(row, index) {
 }
 
 // Triggered when the right-arrow "copy module" button is pressed.
-function ModuleCopyHandler(row) {
+export function ModuleCopyHandler(row) {
     this.handleEvent = function(event) {
         var moduleCount = spec.moduleCount(row.recipe)
         var module = spec.getModule(row.recipe, 0)
@@ -333,13 +403,13 @@ function ModuleCopyHandler(row) {
 }
 
 // Gets Factory object for a corresponding recipe name.
-function getFactory(recipeName) {
+export function getFactory(recipeName) {
     var recipe = solver.recipes[recipeName]
     return spec.getFactory(recipe)
 }
 
 // Triggered when a beacon module is changed.
-function BeaconHandler(recipeName) {
+export function BeaconHandler(recipeName) {
     return function(module) {
         var factory = getFactory(recipeName)
         factory.beaconModule = module
@@ -352,7 +422,7 @@ function BeaconHandler(recipeName) {
 }
 
 // Triggered when a beacon module count is changed.
-function BeaconCountHandler(recipeName) {
+export function BeaconCountHandler(recipeName) {
     this.handleEvent = function(event) {
         var moduleCount = RationalFromString(event.target.value)
         var factory = getFactory(recipeName)
@@ -366,7 +436,7 @@ function BeaconCountHandler(recipeName) {
 }
 
 // Triggered when the up/down arrow "copy to all recipes" button is pressed.
-function CopyAllHandler(name) {
+export function CopyAllHandler(name) {
     this.handleEvent = function(event) {
         var factory = spec.spec[name]
         var needRecalc = false
@@ -392,13 +462,13 @@ function CopyAllHandler(name) {
 
 // items tab events
 
-function PipeCountHandler(config) {
+export function PipeCountHandler(config) {
     this.handleEvent = function(event) {
         config.setPipes(event.target.value)
     }
 }
 
-function PipeLengthHandler(config) {
+export function PipeLengthHandler(config) {
     this.handleEvent = function(event) {
         config.setLength(event.target.value)
     }
@@ -406,11 +476,11 @@ function PipeLengthHandler(config) {
 
 // graph hover events
 
-function GraphMouseOverHandler(node) {
+export function GraphMouseOverHandler(node) {
     node.highlight()
 }
 
-function GraphMouseLeaveHandler(node) {
+export function GraphMouseLeaveHandler(node) {
     if (node !== clickedNode) {
         node.unhighlight()
     }
@@ -418,7 +488,7 @@ function GraphMouseLeaveHandler(node) {
 
 var clickedNode = null
 
-function GraphClickHandler(node) {
+export function GraphClickHandler(node) {
     if (node === clickedNode) {
         node.unhighlight()
         clickedNode = null
@@ -432,9 +502,9 @@ function GraphClickHandler(node) {
 
 // tab events
 
-var DEFAULT_TAB = "totals_tab"
+export var DEFAULT_TAB = "totals_tab";
 
-var currentTab = DEFAULT_TAB
+export var currentTab = DEFAULT_TAB;
 
 var tabMap = {
     "totals_tab": "totals_button",
@@ -447,7 +517,7 @@ var tabMap = {
 }
 
 // Triggered when a tab is clicked on.
-function clickTab(tabName) {
+export function clickTab(tabName) {
     currentTab = tabName
     var tabs = document.getElementsByClassName("tab")
     for (var i=0; i < tabs.length; i++) {
@@ -468,20 +538,20 @@ function clickTab(tabName) {
 }
 
 // Triggered when the "Visualize" tab is clicked on.
-function clickVisualize(event, tabName) {
+export function clickVisualize(event, tabName) {
     clickTab(event, tabName)
     renderGraph(globalTotals, spec.ignore)
 }
 
 // debug event
-function toggleDebug(event) {
-    showDebug = event.target.checked
+export function toggleDebug(event) {
+    settings_showDebug_modificationFunc_11()
     display()
 }
 
 // utility events
 
-function toggleVisible(targetID) {
+export function toggleVisible(targetID) {
     var target = document.getElementById(targetID)
     if (target.style.display == "none") {
         target.style.display = "block"

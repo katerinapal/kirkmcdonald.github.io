@@ -1,3 +1,40 @@
+import { DEFAULT_MODIFICATION } from ".\\settings.js";
+import { MODIFICATIONS } from ".\\settings.js";
+import { OVERRIDE } from ".\\override.js";
+import { globalTotals } from ".\\display.js";
+import { target_build_targets_modificationFunc_0 } from ".\\target.js";
+import { build_targets } from ".\\target.js";
+import { events_currentTab_modificationFunc_0 } from ".\\events.js";
+import { currentTab } from ".\\events.js";
+import { renderSettings } from ".\\settings.js";
+import { currentMod } from ".\\settings.js";
+import { renderDataSetOptions } from ".\\settings.js";
+import { addOverrideOptions } from ".\\settings.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { loadSettings } from ".\\fragment.js";
+import { formatSettings } from ".\\fragment.js";
+import { getFactories } from ".\\factory.js";
+import { FactorySpec } from ".\\factory.js";
+import { setModule } from ".\\factory.js";
+import { RecipeTable } from ".\\display.js";
+import { itemUpdate } from ".\\display.js";
+import { pruneSpec } from ".\\display.js";
+import { addTarget } from ".\\target.js";
+import { setRate } from ".\\target.js";
+import { setFactories } from ".\\target.js";
+import { displayRecipes } from ".\\target.js";
+import { getRecipeGraph } from ".\\recipe.js";
+import { getModules } from ".\\module.js";
+import { shortName } from ".\\module.js";
+import { clickTab } from ".\\events.js";
+import { getFactory } from ".\\events.js";
+import { Solver } from ".\\solve.js";
+import { findSubgraphs } from ".\\solve.js";
+import { getItemGroups } from ".\\group.js";
+import { sorted } from ".\\sort.js";
+import { getSprites } from ".\\icon.js";
+import { getFuel } from ".\\fuel.js";
+import { getBelts } from ".\\belt.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,49 +50,52 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-var recipeTable
+export var recipeTable;
 
 // Contains collections of items and recipes. (solve.js)
-var solver
+export var solver;
 
 // Contains module and factory settings, as well as other settings. (factory.js)
-var spec
+export var spec;
 
 // Map from module name to Module object.
-var modules
+export var modules;
+
 // Array of modules, sorted by 'order'.
 var sortedModules
+
 // Map from short module name to Module object.
-var shortModules
+export var shortModules;
+
 // Array of arrays of modules, separated by category and sorted.
-var moduleRows
+export var moduleRows;
 
 // Array of Belt objects, sorted by speed.
-var belts
+export var belts;
 
 // Array of Fuel objects, sorted by value.
-var fuel
+export var fuel;
 
 // Array of item groups, in turn divided into subgroups. For display purposes.
-var itemGroups
+export var itemGroups;
 
 // Boolean with whether to use old (0.16) calculations.
-var useLegacyCalculations
+export var useLegacyCalculations;
 
 // Size of the sprite sheet, as [x, y] array.
-var spriteSheetSize
+export var spriteSheetSize;
 
-var initDone = false
+export var initDone = false;
 
 // Set the page back to a state immediately following initial setup, but before
 // the dataset is loaded for the first time.
 //
 // This is intended to be called when the top-level dataset is changed.
 // Therefore, it also resets the fragment and settings.
-function reset() {
+export function reset() {
     window.location.hash = ""
 
-    build_targets = []
+    target_build_targets_modificationFunc_0()
     var targetList = document.getElementById("targets")
     var plus = targetList.lastChild
     var newTargetList = document.createElement("ul")
@@ -96,7 +136,7 @@ function loadDataRunner(modName, callback) {
     xobj.send(null)
 }
 
-function loadData(modName, settings) {
+export function loadData(modName, settings) {
     recipeTable = new RecipeTable(document.getElementById("totals"))
     if (!settings) {
         settings = {}
@@ -226,14 +266,14 @@ function loadData(modName, settings) {
     })
 }
 
-function init() {
+export function init() {
     var settings = loadSettings(window.location.hash)
     if (OVERRIDE !== null) {
         addOverrideOptions(OVERRIDE)
     }
     renderDataSetOptions(settings)
     if ("tab" in settings) {
-        currentTab = settings.tab + "_tab"
+        events_currentTab_modificationFunc_0()
     }
     loadData(currentMod(), settings)
     // We don't need to call clickVisualize here, as we will properly render

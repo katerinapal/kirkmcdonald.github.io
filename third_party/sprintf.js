@@ -1,3 +1,6 @@
+import { match } from "..\\vectorize.js";
+import { toString } from "..\\matrix.js";
+import { apply } from "..\\color.js";
 (function(window) {
     var re = {
         not_string: /[^s]/,

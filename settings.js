@@ -1,3 +1,42 @@
+import { visualize_color_modificationFunc_2 } from ".\\visualize.js";
+import { color } from ".\\visualize.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { colorSchemes } from ".\\color.js";
+import { fuel } from ".\\init.js";
+import { belts } from ".\\init.js";
+import { shortModules } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { RationalFromFloats } from ".\\rational.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { RationalFromString } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { addInputs } from ".\\dropdown.js";
+import { makeDropdown } from ".\\dropdown.js";
+import { setDefaultBeacon } from ".\\factory.js";
+import { setDefaultModule } from ".\\factory.js";
+import { setFurnace } from ".\\factory.js";
+import { setMinimum } from ".\\factory.js";
+import { BeltIcon } from ".\\display.js";
+import { equal } from ".\\display.js";
+import { moduleDropdown } from ".\\module.js";
+import { canBeacon } from ".\\module.js";
+import { changeDefaultBeacon } from ".\\events.js";
+import { changeDefaultModule } from ".\\events.js";
+import { changeBelt } from ".\\events.js";
+import { changeOil } from ".\\events.js";
+import { changeFuel } from ".\\events.js";
+import { changeFurnace } from ".\\events.js";
+import { changeMin } from ".\\events.js";
+import { displayRateHandler } from ".\\events.js";
+import { pipeThroughput } from ".\\steps.js";
+import { removeDisabledRecipes } from ".\\solve.js";
+import { addDisabledRecipes } from ".\\solve.js";
+import { apply } from ".\\color.js";
+import { getImage } from ".\\icon.js";
+import { valueString } from ".\\fuel.js";
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,18 +60,18 @@ function Modification(name, filename, legacy, sheetSize) {
     this.sheetSize = sheetSize
 }
 
-var MODIFICATIONS = {
+export var MODIFICATIONS = {
     "0-16-51": new Modification("Vanilla 0.16.51", "vanilla-0.16.51.json", true, [480, 512]),
     "0-16-51x": new Modification("Vanilla 0.16.51 - Expensive", "vanilla-0.16.51-expensive.json", true, [480, 512]),
     "0-17-60": new Modification("Vanilla 0.17.60", "vanilla-0.17.60.json", false, [480, 512]),
     "0-17-60x": new Modification("Vanilla 0.17.60 - Expensive", "vanilla-0.17.60-expensive.json", false, [480, 512]),
     "017science": new Modification("0.16.51 w/ 0.17 science mod", "017science-0.16.51.json", true, [480, 512]),
     "bobs-0-16-51": new Modification("(EXPERIMENTAL) Bob's Mods + base 0.16.51", "bobs-0.16.51.json", true, [800, 832])
-}
+};
 
-var DEFAULT_MODIFICATION = "0-16-51"
+export var DEFAULT_MODIFICATION = "0-16-51";
 
-function addOverrideOptions(version) {
+export function addOverrideOptions(version) {
     var tag = "local-" + version.replace(/\./g, "-")
     MODIFICATIONS[tag] = new Modification("Local game data " + version, "local-" + version + ".json")
     MODIFICATIONS[tag + "x"] = new Modification("Local game data " + version + " - Expensive", "local-" + version + "-expensive.json")
@@ -58,7 +97,7 @@ function normalizeDataSetName(modName) {
     return modName
 }
 
-function renderDataSetOptions(settings) {
+export function renderDataSetOptions(settings) {
     var modSelector = document.getElementById("data_set")
     var configuredMod = normalizeDataSetName(settings.data)
     for (var modName in MODIFICATIONS) {
@@ -74,20 +113,20 @@ function renderDataSetOptions(settings) {
 }
 
 // Returns currently-selected data set.
-function currentMod() {
+export function currentMod() {
     var elem = document.getElementById("data_set")
     return elem.value
 }
 
 // color scheme
-var DEFAULT_COLOR_SCHEME = "default"
+export var DEFAULT_COLOR_SCHEME = "default";
 
-var colorScheme
+export var colorScheme;
 
 function renderColorScheme(settings) {
     var color = DEFAULT_COLOR_SCHEME
     if ("c" in settings) {
-        color = settings.c
+        visualize_color_modificationFunc_2()
     }
     setColorScheme(color)
     var colorSelector = document.getElementById("color_scheme")
@@ -105,7 +144,7 @@ function renderColorScheme(settings) {
     }
 }
 
-function setColorScheme(schemeName) {
+export function setColorScheme(schemeName) {
     for (var i = 0; i < colorSchemes.length; i++) {
         if (colorSchemes[i].name === schemeName) {
             colorScheme = colorSchemes[i]
@@ -116,25 +155,26 @@ function setColorScheme(schemeName) {
 }
 
 // display rate
-var seconds = one
-var minutes = RationalFromFloat(60)
-var hours = RationalFromFloat(3600)
+export var seconds = one;
 
-var displayRates = {
+export var minutes = RationalFromFloat(60);
+export var hours = RationalFromFloat(3600);
+
+export var displayRates = {
     "s": seconds,
     "m": minutes,
     "h": hours,
-}
-var longRateNames = {
+};
+
+export var longRateNames = {
     "s": "second",
     "m": "minute",
     "h": "hour",
-}
+};
 
-var DEFAULT_RATE = "m"
-
-var displayRateFactor = displayRates[DEFAULT_RATE]
-var rateName = DEFAULT_RATE
+export var DEFAULT_RATE = "m";
+export var displayRateFactor = displayRates[DEFAULT_RATE];
+export var rateName = DEFAULT_RATE;
 
 function renderRateOptions(settings) {
     rateName = DEFAULT_RATE
@@ -168,11 +208,11 @@ function renderRateOptions(settings) {
 }
 
 // precisions
-var DEFAULT_RATE_PRECISION = 3
-var ratePrecision = DEFAULT_RATE_PRECISION
+export var DEFAULT_RATE_PRECISION = 3;
 
-var DEFAULT_COUNT_PRECISION = 1
-var countPrecision = DEFAULT_COUNT_PRECISION
+export var ratePrecision = DEFAULT_RATE_PRECISION;
+export var DEFAULT_COUNT_PRECISION = 1;
+export var countPrecision = DEFAULT_COUNT_PRECISION;
 
 function renderPrecisions(settings) {
     ratePrecision = DEFAULT_RATE_PRECISION
@@ -188,9 +228,9 @@ function renderPrecisions(settings) {
 }
 
 // minimum assembler
-var DEFAULT_MINIMUM = "1"
+export var DEFAULT_MINIMUM = "1";
 
-var minimumAssembler = DEFAULT_MINIMUM
+export var minimumAssembler = DEFAULT_MINIMUM;
 
 function renderMinimumAssembler(settings) {
     var min = DEFAULT_MINIMUM
@@ -219,7 +259,7 @@ function renderMinimumAssembler(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setMinimumAssembler(min) {
+export function setMinimumAssembler(min) {
     spec.setMinimum(min)
     minimumAssembler = min
 }
@@ -227,7 +267,7 @@ function setMinimumAssembler(min) {
 // furnace
 
 // Assigned during FactorySpec initialization.
-var DEFAULT_FURNACE
+export var DEFAULT_FURNACE;
 
 function renderFurnace(settings) {
     var furnaceName = DEFAULT_FURNACE
@@ -255,9 +295,9 @@ function renderFurnace(settings) {
 }
 
 // fuel
-var DEFAULT_FUEL = "coal"
+export var DEFAULT_FUEL = "coal";
 
-var preferredFuel
+export var preferredFuel;
 
 function renderFuel(settings) {
     var fuelName = DEFAULT_FUEL
@@ -285,7 +325,7 @@ function renderFuel(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setPreferredFuel(name) {
+export function setPreferredFuel(name) {
     for (var i = 0; i < fuel.length; i++) {
         var f = fuel[i]
         if (f.name === name) {
@@ -306,7 +346,7 @@ var OIL_OPTIONS = [
     new Oil("coal-liquefaction", "coal")
 ]
 
-var DEFAULT_OIL = "default"
+export var DEFAULT_OIL = "default";
 
 var OIL_EXCLUSION = {
     "default": {},
@@ -314,7 +354,7 @@ var OIL_EXCLUSION = {
     "coal": {"advanced-oil-processing": true, "basic-oil-processing": true}
 }
 
-var oilGroup = DEFAULT_OIL
+export var oilGroup = DEFAULT_OIL;
 
 function renderOil(settings) {
     var oil = DEFAULT_OIL
@@ -339,16 +379,16 @@ function renderOil(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setOilRecipe(name) {
+export function setOilRecipe(name) {
     solver.removeDisabledRecipes(OIL_EXCLUSION[oilGroup])
     oilGroup = name
     solver.addDisabledRecipes(OIL_EXCLUSION[oilGroup])
 }
 
 // kovarex
-var DEFAULT_KOVAREX = true
+export var DEFAULT_KOVAREX = true;
 
-var kovarexEnabled
+export var kovarexEnabled;
 
 function renderKovarex(settings) {
     var k = DEFAULT_KOVAREX
@@ -360,7 +400,7 @@ function renderKovarex(settings) {
     input.checked = k
 }
 
-function setKovarex(enabled) {
+export function setKovarex(enabled) {
     kovarexEnabled = enabled
     if (enabled) {
         solver.removeDisabledRecipes({"kovarex-enrichment-process": true})
@@ -370,10 +410,10 @@ function setKovarex(enabled) {
 }
 
 // belt
-var DEFAULT_BELT = "transport-belt"
+export var DEFAULT_BELT = "transport-belt";
 
-var preferredBelt = DEFAULT_BELT
-var preferredBeltSpeed = null
+export var preferredBelt = DEFAULT_BELT;
+export var preferredBeltSpeed = null;
 
 function renderBelt(settings) {
     var pref = DEFAULT_BELT
@@ -397,7 +437,7 @@ function renderBelt(settings) {
     cell.replaceChild(node, oldNode)
 }
 
-function setPreferredBelt(name) {
+export function setPreferredBelt(name) {
     for (var i = 0; i < belts.length; i++) {
         var belt = belts[i]
         if (belt.name === name) {
@@ -408,10 +448,10 @@ function setPreferredBelt(name) {
 }
 
 // pipe
-var DEFAULT_PIPE = RationalFromFloat(17)
+export var DEFAULT_PIPE = RationalFromFloat(17);
 
-var minPipeLength = DEFAULT_PIPE
-var maxPipeThroughput = null
+export var minPipeLength = DEFAULT_PIPE;
+export var maxPipeThroughput = null;
 
 function renderPipe(settings) {
     var pipe = DEFAULT_PIPE.toDecimal(0)
@@ -422,7 +462,7 @@ function renderPipe(settings) {
     document.getElementById("pipe_length").value = minPipeLength.toDecimal(0)
 }
 
-function setMinPipe(lengthString) {
+export function setMinPipe(lengthString) {
     minPipeLength = RationalFromString(lengthString)
     maxPipeThroughput = pipeThroughput(minPipeLength)
 }
@@ -440,7 +480,7 @@ function renderMiningProd(settings) {
     spec.miningProd = getMprod()
 }
 
-function getMprod() {
+export function getMprod() {
     var mprod = document.getElementById("mprod").value
     return RationalFromFloats(Number(mprod), 100)
 }
@@ -496,9 +536,9 @@ function renderDefaultBeacon(settings) {
 }
 
 // visualizer settings
-let DEFAULT_VISUALIZER = "sankey"
+export let DEFAULT_VISUALIZER = "sankey";
 
-let visualizer = DEFAULT_VISUALIZER
+export let visualizer = DEFAULT_VISUALIZER;
 
 function renderVisualizerType(settings) {
     visualizer = DEFAULT_VISUALIZER
@@ -509,9 +549,8 @@ function renderVisualizerType(settings) {
     input.checked = true
 }
 
-let DEFAULT_DIRECTION = "right"
-
-let visDirection = DEFAULT_DIRECTION
+export let DEFAULT_DIRECTION = "right";
+export let visDirection = DEFAULT_DIRECTION;
 
 function renderVisualizerDirection(settings) {
     visDirection = DEFAULT_DIRECTION
@@ -522,9 +561,8 @@ function renderVisualizerDirection(settings) {
     input.checked = true
 }
 
-const DEFAULT_NODE_BREADTH = 175
-
-let maxNodeHeight = DEFAULT_NODE_BREADTH
+export const DEFAULT_NODE_BREADTH = 175;
+export let maxNodeHeight = DEFAULT_NODE_BREADTH;
 
 function renderNodeBreadth(settings) {
     maxNodeHeight = DEFAULT_NODE_BREADTH
@@ -535,9 +573,8 @@ function renderNodeBreadth(settings) {
     input.value = maxNodeHeight
 }
 
-const DEFAULT_LINK_LENGTH = 200
-
-let linkLength = DEFAULT_LINK_LENGTH
+export const DEFAULT_LINK_LENGTH = 200;
+export let linkLength = DEFAULT_LINK_LENGTH;
 
 function renderLinkLength(settings) {
     linkLength = DEFAULT_LINK_LENGTH
@@ -549,9 +586,9 @@ function renderLinkLength(settings) {
 }
 
 // value format
-var DEFAULT_FORMAT = "decimal"
+export var DEFAULT_FORMAT = "decimal";
 
-var displayFormat = DEFAULT_FORMAT
+export var displayFormat = DEFAULT_FORMAT;
 
 var displayFormats = {
     "d": "decimal",
@@ -568,9 +605,9 @@ function renderValueFormat(settings) {
 }
 
 // tooltips
-var DEFAULT_TOOLTIP = true
+export var DEFAULT_TOOLTIP = true;
 
-var tooltipsEnabled = DEFAULT_TOOLTIP
+export var tooltipsEnabled = DEFAULT_TOOLTIP;
 
 function renderTooltip(settings) {
     tooltipsEnabled = DEFAULT_TOOLTIP
@@ -582,9 +619,9 @@ function renderTooltip(settings) {
 }
 
 // debug tab
-var DEFAULT_DEBUG = false
+export var DEFAULT_DEBUG = false;
 
-var showDebug = DEFAULT_DEBUG
+export var showDebug = DEFAULT_DEBUG;
 
 function renderShowDebug(settings) {
     showDebug = DEFAULT_DEBUG
@@ -596,7 +633,7 @@ function renderShowDebug(settings) {
 }
 
 // all
-function renderSettings(settings) {
+export function renderSettings(settings) {
     renderTooltip(settings)
     renderColorScheme(settings)
     renderRateOptions(settings)

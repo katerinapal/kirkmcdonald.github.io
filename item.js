@@ -1,3 +1,14 @@
+import { spec } from ".\\init.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { formatName } from ".\\display.js";
+import { Totals } from ".\\totals.js";
+import { addUnfinished } from ".\\totals.js";
+import { combine } from ".\\totals.js";
+import { add } from ".\\totals.js";
+import { fuelIngredient } from ".\\recipe.js";
+import { gives } from ".\\recipe.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,7 +85,7 @@ Item.prototype = {
     }
 }
 
-function getItem(data, items, name) {
+export function getItem(data, items, name) {
     if (name in items) {
         return items[name]
     } else {
@@ -99,7 +110,7 @@ function getItem(data, items, name) {
     }
 }
 
-function getItems(data) {
+export function getItems(data) {
     var items = {}
     var cycleName = "nuclear-reactor-cycle"
     var reactor = data.items["nuclear-reactor"]

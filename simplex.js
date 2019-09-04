@@ -1,3 +1,13 @@
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { minusOne } from ".\\rational.js";
+import { reciprocate } from ".\\rational.js";
+import { isZero } from ".\\rational.js";
+import { less } from ".\\factory.js";
+import { equal } from ".\\display.js";
+import { mulRow } from ".\\matrix.js";
+import { setIndex } from ".\\matrix.js";
+import { index } from ".\\matrix.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -135,7 +145,7 @@ function eliminateNegativeBases(A) {
     }
 }
 
-function simplex(A) {
+export function simplex(A) {
     while (true) {
         var min = null
         var minCol = null

@@ -1,3 +1,7 @@
+import { useLegacyCalculations } from ".\\init.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +22,7 @@ function Belt(name, speed) {
     this.speed = speed
 }
 
-function getBelts(data) {
+export function getBelts(data) {
     var beltData = data["transport-belt"]
     var beltObjs = []
     for (var beltName in beltData) {

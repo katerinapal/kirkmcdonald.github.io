@@ -1,3 +1,4 @@
+import { zero } from ".\\rational.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +28,7 @@ Requirements.prototype = {
     }
 }
 
-function Totals(rate, item) {
+export function Totals(rate, item) {
     this.reqs = new Requirements(rate, item)
     // Maps recipe name to its required rate.
     this.totals = {}
@@ -37,6 +38,7 @@ function Totals(rate, item) {
     this.waste = {}
     this.topo = []
 }
+
 Totals.prototype = {
     constructor: Totals,
     combine: function(other, suppress) {

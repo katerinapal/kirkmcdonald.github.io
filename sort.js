@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.*/
 "use strict"
 
-function sorted(collection, key) {
+export function sorted(collection, key) {
     if (!Array.isArray(collection)) {
         collection = Object.keys(collection)
     }

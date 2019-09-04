@@ -1,3 +1,20 @@
+import { color } from ".\\visualize.js";
+import { iconSize } from ".\\visualize.js";
+import { colorList } from ".\\visualize.js";
+import { rateName } from ".\\settings.js";
+import { fuel } from ".\\init.js";
+import { sheet_hash } from ".\\icon.js";
+import { getColorMaps } from ".\\visualize.js";
+import { imageViewBox } from ".\\visualize.js";
+import { renderNode } from ".\\visualize.js";
+import { displayRate } from ".\\display.js";
+import { formatName } from ".\\display.js";
+import { remove } from ".\\display.js";
+import { get } from ".\\totals.js";
+import { index } from ".\\matrix.js";
+import { GraphClickHandler } from ".\\events.js";
+import { GraphMouseLeaveHandler } from ".\\events.js";
+import { GraphMouseOverHandler } from ".\\events.js";
 /*Copyright 2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +42,7 @@ function edgeName(link) {
         return `link-${link.index}`
 }
 
-function renderBoxGraph({nodes, links}, direction, ignore, sheetWidth, sheetHeight) {
+export function renderBoxGraph({nodes, links}, direction, ignore, sheetWidth, sheetHeight) {
     let [itemColors, recipeColors] = getColorMaps(nodes, links)
     if (direction === "down") {
         direction = "TB"

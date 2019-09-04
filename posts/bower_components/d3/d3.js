@@ -1,3 +1,35 @@
+import { visualize_color_modificationFunc_2 } from "..\\..\\..\\visualize.js";
+import { visualize_color_modificationFunc_1 } from "..\\..\\..\\visualize.js";
+import { visualize_color_modificationFunc_0 } from "..\\..\\..\\visualize.js";
+import { color } from "..\\..\\..\\visualize.js";
+import { hours } from "..\\..\\..\\settings.js";
+import { minutes } from "..\\..\\..\\settings.js";
+import { seconds } from "..\\..\\..\\settings.js";
+import { L } from "..\\..\\..\\circlepath.js";
+import { R } from "..\\..\\..\\circlepath.js";
+import { match } from "..\\..\\..\\vectorize.js";
+import { visit } from "..\\..\\..\\subgraphs.js";
+import { neighbors } from "..\\..\\..\\subgraphs.js";
+import { merge } from "..\\..\\..\\subgraphs.js";
+import { abs } from "..\\..\\..\\rational.js";
+import { floor } from "..\\..\\..\\rational.js";
+import { ceil } from "..\\..\\..\\rational.js";
+import { create } from "..\\..\\..\\tooltip.js";
+import { align } from "..\\..\\..\\display.js";
+import { remove } from "..\\..\\..\\display.js";
+import { csv } from "..\\..\\..\\display.js";
+import { get } from "..\\..\\..\\totals.js";
+import { add } from "..\\..\\..\\totals.js";
+import { index } from "..\\..\\..\\matrix.js";
+import { copy } from "..\\..\\..\\matrix.js";
+import { toString } from "..\\..\\..\\matrix.js";
+import { apply } from "..\\..\\..\\color.js";
+import { reset } from "..\\..\\..\\init.js";
+import { find } from "..\\..\\..\\d3-sankey\\sankey.js";
+import { value } from "..\\..\\..\\d3-sankey\\sankey.js";
+import { center } from "..\\..\\..\\d3-sankey\\align.js";
+import { right } from "..\\..\\..\\d3-sankey\\align.js";
+import { left } from "..\\..\\..\\d3-sankey\\align.js";
 !function() {
   var d3 = {
     version: "3.5.17"
@@ -1719,10 +1751,10 @@
         }
       }
     }
-    if (color = d3_rgb_names.get(format)) {
+    if (visualize_color_modificationFunc_0()) {
       return rgb(color.r, color.g, color.b);
     }
-    if (format != null && format.charAt(0) === "#" && !isNaN(color = parseInt(format.slice(1), 16))) {
+    if (format != null && format.charAt(0) === "#" && !isNaN(visualize_color_modificationFunc_1())) {
       if (format.length === 4) {
         r = (color & 3840) >> 4;
         r = r >> 4 | r;

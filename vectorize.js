@@ -1,3 +1,24 @@
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { minusOne } from ".\\rational.js";
+import { useLegacyCalculations } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { sub } from ".\\rational.js";
+import { isZero } from ".\\rational.js";
+import { simplex } from ".\\simplex.js";
+import { prodEffect } from ".\\factory.js";
+import { less } from ".\\factory.js";
+import { equal } from ".\\display.js";
+import { getIngredients } from ".\\recipe.js";
+import { Matrix } from ".\\matrix.js";
+import { zeroRow } from ".\\matrix.js";
+import { addIndex } from ".\\matrix.js";
+import { setIndex } from ".\\matrix.js";
+import { index } from ".\\matrix.js";
+import { copy } from ".\\matrix.js";
+import { getFactory } from ".\\events.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +36,7 @@ limitations under the License.*/
 
 var PRIORITY = ["uranium-ore", "steam", "coal", "crude-oil", "water"]
 
-function MatrixSolver(spec, recipes) {
+export function MatrixSolver(spec, recipes) {
     var products = {}
     var ingredients = {}
     var recipeArray = []
@@ -116,6 +137,7 @@ function MatrixSolver(spec, recipes) {
     this.lastProblem = null
     this.lastSolution = null
 }
+
 MatrixSolver.prototype = {
     constructor: MatrixSolver,
     match: function(products) {

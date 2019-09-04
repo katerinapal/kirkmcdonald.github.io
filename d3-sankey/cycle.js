@@ -1,3 +1,6 @@
+import { remove } from "..\\display.js";
+import { get } from "..\\totals.js";
+import { add } from "..\\totals.js";
 // Determine a set of links which need to be reversed to render the graph
 // acyclic.
 //

@@ -1,3 +1,17 @@
+import { calculation_options_modificationFunc_0 } from ".\\calculation.js";
+import { options } from ".\\calculation.js";
+import { zero } from ".\\rational.js";
+import { NO_MODULE } from ".\\display.js";
+import { moduleRows } from ".\\init.js";
+import { modules } from ".\\init.js";
+import { RationalFromFloat } from ".\\rational.js";
+import { toDecimal } from ".\\rational.js";
+import { addInputs } from ".\\dropdown.js";
+import { makeDropdown } from ".\\dropdown.js";
+import { formatName } from ".\\display.js";
+import { allModules } from ".\\recipe.js";
+import { getExtraImage } from ".\\icon.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -113,7 +127,7 @@ Module.prototype = {
     }
 }
 
-function moduleDropdown(selection, name, selected, callback, filter) {
+export function moduleDropdown(selection, name, selected, callback, filter) {
     let rows = [[null]].concat(moduleRows)
 
     let dropdown = makeDropdown(selection)
@@ -124,7 +138,7 @@ function moduleDropdown(selection, name, selected, callback, filter) {
             .data(d => d)
             .join("span")
     if (filter) {
-        options = options.filter(filter)
+        calculation_options_modificationFunc_0()
     }
     let labels = addInputs(
         options,
@@ -153,7 +167,7 @@ function moduleDropdown(selection, name, selected, callback, filter) {
     return {dropdown: dropdown.node(), inputs: inputs}
 }
 
-function getModules(data) {
+export function getModules(data) {
     var modules = {}
     for (var i = 0; i < data.modules.length; i++) {
         var name = data.modules[i]

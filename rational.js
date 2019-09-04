@@ -1,3 +1,6 @@
+import { less } from ".\\factory.js";
+import { equal } from ".\\display.js";
+import { add } from ".\\totals.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -160,7 +163,7 @@ Rational.prototype = {
     },
 }
 
-function RationalFromString(s) {
+export function RationalFromString(s) {
     var i = s.indexOf("/")
     if (i === -1) {
         return RationalFromFloat(Number(s))
@@ -180,7 +183,7 @@ function RationalFromString(s) {
 var _one_third = new Rational(bigInt(33333), bigInt(100000))
 var _two_thirds = new Rational(bigInt(33333), bigInt(50000))
 
-function RationalFromFloat(x) {
+export function RationalFromFloat(x) {
     if (Number.isInteger(x)) {
         return RationalFromFloats(x, 1)
     }
@@ -196,13 +199,13 @@ function RationalFromFloat(x) {
     return r
 }
 
-function RationalFromFloats(p, q) {
+export function RationalFromFloats(p, q) {
     return new Rational(bigInt(p), bigInt(q))
 }
 
-var minusOne = new Rational(bigInt.minusOne, bigInt.one)
-var zero = new Rational(bigInt.zero, bigInt.one)
-var one = new Rational(bigInt.one, bigInt.one)
-var half = new Rational(bigInt.one, bigInt(2))
+export var minusOne = new Rational(bigInt.minusOne, bigInt.one);
+export var zero = new Rational(bigInt.zero, bigInt.one);
+export var one = new Rational(bigInt.one, bigInt.one);
+export var half = new Rational(bigInt.one, bigInt(2));
 var oneThird = new Rational(bigInt.one, bigInt(3))
 var twoThirds = new Rational(bigInt(2), bigInt(3))

@@ -1,3 +1,29 @@
+import { rateName } from ".\\settings.js";
+import { displayRateFactor } from ".\\settings.js";
+import { longRateNames } from ".\\settings.js";
+import { one } from ".\\rational.js";
+import { zero } from ".\\rational.js";
+import { itemGroups } from ".\\init.js";
+import { spec } from ".\\init.js";
+import { solver } from ".\\init.js";
+import { RationalFromString } from ".\\rational.js";
+import { div } from ".\\rational.js";
+import { mul } from ".\\rational.js";
+import { addInputs } from ".\\dropdown.js";
+import { makeDropdown } from ".\\dropdown.js";
+import { recipeRate } from ".\\factory.js";
+import { displayCount } from ".\\display.js";
+import { displayRate } from ".\\display.js";
+import { gives } from ".\\recipe.js";
+import { index } from ".\\matrix.js";
+import { RateHandler } from ".\\events.js";
+import { FactoryHandler } from ".\\events.js";
+import { RemoveHandler } from ".\\events.js";
+import { RecipeSelectorHandler } from ".\\events.js";
+import { ItemHandler } from ".\\events.js";
+import { searchTargets } from ".\\events.js";
+import { resetSearch } from ".\\events.js";
+import { getImage } from ".\\icon.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +41,9 @@ limitations under the License.*/
 
 var DEFAULT_ITEM = "advanced-circuit"
 
-var build_targets = []
+export var build_targets = [];
 
-function addTarget(itemName) {
+export function addTarget(itemName) {
     var target = new BuildTarget(build_targets.length, itemName)
     build_targets.push(target)
     var targetList = document.getElementById("targets")
@@ -26,7 +52,7 @@ function addTarget(itemName) {
     return target
 }
 
-function isFactoryTarget(recipeName) {
+export function isFactoryTarget(recipeName) {
     // Special case: rocket-part and rocket-launch are linked in a weird way.
     if (recipeName === "rocket-part") {
         if (isFactoryTarget("rocket-launch")) {

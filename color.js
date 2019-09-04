@@ -1,3 +1,4 @@
+import { value } from ".\\d3-sankey\\sankey.js";
 /*Copyright 2015-2019 Kirk McDonald
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +30,7 @@ ColorScheme.prototype = {
     }
 }
 
-var colorSchemes = [
+export var colorSchemes = [
     new ColorScheme(
         "Default",
         "default",
@@ -58,4 +59,4 @@ var colorSchemes = [
             "--bright": "#111111"
         }
     )
-]
+];
